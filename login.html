@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Entrar · Petshop Feliz</title>
+<link rel="stylesheet" href="assets/styles.css" />
+<style>
+  body { background: var(--base-0); }
+  .login-shell {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+  }
+  /* Coluna institucional */
+  .login-brand-side {
+    background: radial-gradient(circle at 20% 15%, var(--aqua-500), var(--aqua-900) 75%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--sp-10) var(--sp-12);
+    color: var(--base-0);
+  }
+  .login-brand-side .paw-trail {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,.5) 1.8px, transparent 2px);
+    background-size: 30px 30px;
+    opacity: .18;
+  }
+  .login-brand-side .brand-name,
+  .login-brand-side .brand-tagline { color: var(--base-0); }
+  .login-brand-side .brand-tagline { color: rgba(255,255,255,.75); }
+  .login-brand-side .brand-mark { background: rgba(255,255,255,.16); backdrop-filter: blur(2px); }
+
+  .mascot-wrap { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--sp-6); margin: auto 0; }
+  .mascot-quote {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 600;
+    max-width: 420px;
+    line-height: 1.3;
+  }
+  .mascot-quote span { color: var(--honey-500); }
+
+  .stat-row { position: relative; z-index: 2; display: flex; gap: var(--sp-8); }
+  .stat-row div p:first-child { font-family: var(--font-mono); font-size: 22px; font-weight: 600; }
+  .stat-row div p:last-child { font-size: 12px; color: rgba(255,255,255,.7); margin-top: 2px; }
+
+  /* Coluna do formulário */
+  .login-form-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--sp-8);
+  }
+  .login-form-inner { width: 100%; max-width: 380px; }
+  .login-form-inner .brand { margin-bottom: var(--sp-10); }
+  .login-form-inner .brand-mark { background: linear-gradient(155deg, var(--aqua-500), var(--aqua-700)); }
+  .login-form-inner .brand-name { color: var(--aqua-900); }
+
+  .form-eyebrow { font-size: 12.5px; font-weight: 700; color: var(--aqua-700); text-transform: uppercase; letter-spacing: .05em; margin-bottom: var(--sp-2); }
+  .form-title { font-size: 26px; margin-bottom: var(--sp-8); }
+
+  .field { margin-bottom: var(--sp-5); }
+  .field label { display: block; font-size: 13px; font-weight: 600; color: var(--ink-700); margin-bottom: 6px; }
+  .field-input-wrap { position: relative; }
+  .field input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--ink-100);
+    font-size: 14px;
+    font-family: var(--font-body);
+    color: var(--ink-900);
+    background: var(--base-50);
+    transition: border-color .15s, background .15s;
+  }
+  .field input:focus { outline: none; border-color: var(--aqua-500); background: var(--base-0); }
+  .field-toggle {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; color: var(--ink-500); font-size: 12px; font-weight: 600;
+  }
+
+  .field-row-between { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-6); }
+  .checkbox-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-700); }
+  .checkbox-row input { width: 16px; height: 16px; accent-color: var(--aqua-700); }
+  .link-muted { font-size: 13px; font-weight: 600; color: var(--aqua-700); }
+  .link-muted:hover { text-decoration: underline; }
+
+  .btn-block { width: 100%; padding: 13px; font-size: 14.5px; }
+
+  .divider-row { display: flex; align-items: center; gap: var(--sp-3); margin: var(--sp-6) 0; }
+  .divider-row hr { flex: 1; border: none; border-top: 1px solid var(--ink-100); }
+  .divider-row span { font-size: 12px; color: var(--ink-300); }
+
+  .rbac-note {
+    display: flex; gap: var(--sp-3); align-items: flex-start;
+    background: var(--aqua-100); border-radius: var(--radius-md);
+    padding: var(--sp-4); margin-top: var(--sp-6);
+  }
+  .rbac-note p:first-child { font-size: 12.5px; font-weight: 700; color: var(--aqua-900); margin-bottom: 3px; }
+  .rbac-note p:last-child { font-size: 12px; color: var(--ink-700); line-height: 1.5; }
+
+  .security-alert {
+    display: none;
+    gap: var(--sp-3); align-items: flex-start;
+    background: var(--coral-100); border: 1px solid var(--coral-500); border-radius: var(--radius-md);
+    padding: var(--sp-4); margin-bottom: var(--sp-5);
+  }
+  .security-alert.show { display: flex; }
+  .security-alert p:first-child { font-size: 13px; font-weight: 700; color: var(--coral-600); margin-bottom: 2px; }
+  .security-alert p:last-child { font-size: 12.5px; color: var(--ink-700); }
+
+  @media (max-width: 860px) {
+    .login-shell { grid-template-columns: 1fr; }
+    .login-brand-side { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="login-shell">
+  <!-- ===================== COLUNA INSTITUCIONAL / MASCOTE ===================== -->
+  <section class="login-brand-side">
+    <div class="paw-trail" aria-hidden="true"></div>
+
+    <div class="brand" style="position:relative; z-index:2;">
+      <span class="brand-mark">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="16" rx="6" ry="5" fill="#fff"/><ellipse cx="4.5" cy="10" rx="2.3" ry="3" fill="#fff"/><ellipse cx="9.5" cy="6" rx="2.3" ry="3" fill="#fff"/><ellipse cx="14.5" cy="6" rx="2.3" ry="3" fill="#fff"/><ellipse cx="19.5" cy="10" rx="2.3" ry="3" fill="#fff"/></svg>
+      </span>
+      <span>
+        <div class="brand-name">Petshop Feliz</div>
+        <div class="brand-tagline">Gestão completa, cuidado de verdade</div>
+      </span>
+    </div>
+
+    <div class="mascot-wrap">
+      <!-- Mascote ilustrado (SVG próprio, sem dependência externa) -->
+      <svg width="180" height="180" viewBox="0 0 200 200" aria-hidden="true">
+        <ellipse cx="100" cy="185" rx="60" ry="10" fill="rgba(0,0,0,0.12)"/>
+        <ellipse cx="70" cy="60" rx="22" ry="30" fill="#0F3E39" transform="rotate(-25 70 60)"/>
+        <ellipse cx="130" cy="60" rx="22" ry="30" fill="#0F3E39" transform="rotate(25 130 60)"/>
+        <circle cx="100" cy="105" r="62" fill="#F7F9F8"/>
+        <ellipse cx="100" cy="120" rx="30" ry="24" fill="#EAF6F4"/>
+        <circle cx="78" cy="95" r="8" fill="#16302C"/>
+        <circle cx="122" cy="95" r="8" fill="#16302C"/>
+        <circle cx="81" cy="92" r="2.4" fill="#fff"/>
+        <circle cx="125" cy="92" r="2.4" fill="#fff"/>
+        <ellipse cx="100" cy="112" rx="9" ry="7" fill="#FF6B5B"/>
+        <path d="M100 118 Q100 128 88 128" stroke="#16302C" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M100 118 Q100 128 112 128" stroke="#16302C" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M62 100 Q48 96 44 108" stroke="#16302C" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M138 100 Q152 96 156 108" stroke="#16302C" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <p class="mascot-quote">Cada <span>banho</span>, cada <span>consulta</span>, cada <span>tutor</span> — tudo em um só lugar.</p>
+    </div>
+
+    <div class="stat-row">
+      <div><p>2.400+</p><p>pets cadastrados</p></div>
+      <div><p>98,7%</p><p>satisfação dos tutores</p></div>
+      <div><p>24</p><p>colaboradores ativos</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== COLUNA DO FORMULÁRIO ===================== -->
+  <section class="login-form-side">
+    <div class="login-form-inner">
+      <div class="brand">
+        <span class="brand-mark">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="16" rx="6" ry="5" fill="#fff"/><ellipse cx="4.5" cy="10" rx="2.3" ry="3" fill="#fff"/><ellipse cx="9.5" cy="6" rx="2.3" ry="3" fill="#fff"/><ellipse cx="14.5" cy="6" rx="2.3" ry="3" fill="#fff"/><ellipse cx="19.5" cy="10" rx="2.3" ry="3" fill="#fff"/></svg>
+        </span>
+        <span>
+          <div class="brand-name">Petshop Feliz</div>
+        </span>
+      </div>
+
+      <p class="form-eyebrow">Acesso ao sistema</p>
+      <h1 class="form-title">Entrar na sua conta</h1>
+
+      <!-- Estado de erro por tentativas — oculto por padrão -->
+      <div class="security-alert" id="lockAlert">
+        <span style="color:var(--coral-600);flex-shrink:0;margin-top:1px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        </span>
+        <div>
+          <p>Acesso bloqueado temporariamente</p>
+          <p>5 tentativas incorretas foram detectadas. Tente novamente em <strong>15 minutos</strong> ou recupere sua senha abaixo.</p>
+        </div>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <label for="email">E-mail ou usuário</label>
+          <div class="field-input-wrap">
+            <input type="text" id="email" name="email" placeholder="nome@petshopfeliz.com.br" autocomplete="username" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="password">Senha</label>
+          <div class="field-input-wrap">
+            <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required />
+            <button type="button" class="field-toggle" id="togglePw">mostrar</button>
+          </div>
+        </div>
+
+        <div class="field-row-between">
+          <label class="checkbox-row">
+            <input type="checkbox" name="remember" />
+            Manter conectado
+          </label>
+          <a href="#" class="link-muted" id="forgotLink">Esqueci minha senha</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" id="submitBtn">Entrar</button>
+      </form>
+
+      <div class="divider-row"><hr /><span>ACESSO POR PERFIL</span><hr /></div>
+
+      <div class="rbac-note">
+        <span style="color:var(--aqua-700);flex-shrink:0;margin-top:1px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </span>
+        <div>
+          <p>Redirecionamento automático (RBAC)</p>
+          <p>Veterinários acessam a Agenda, vendedores vão para o CRM e gestores para RH/Financeiro — tudo definido pelo perfil da conta. Perfis com acesso financeiro exigem confirmação por autenticação em dois fatores (2FA) a cada novo dispositivo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Alternar visibilidade da senha
+  const pwInput = document.getElementById('password');
+  document.getElementById('togglePw').addEventListener('click', (e) => {
+    const isPw = pwInput.type === 'password';
+    pwInput.type = isPw ? 'text' : 'password';
+    e.target.textContent = isPw ? 'ocultar' : 'mostrar';
+  });
+
+  // Simulação do fluxo de bloqueio após tentativas incorretas + roteamento por perfil (RBAC)
+  let attempts = 0;
+  const ROUTES = {
+    'vet@petshopfeliz.com.br': 'crm.html', // agenda ainda não modelada nesta entrega; CRM ilustra o roteamento
+    'financeiro@petshopfeliz.com.br': 'financeiro.html',
+    'comercial@petshopfeliz.com.br': 'crm.html',
+    'rh@petshopfeliz.com.br': 'rh.html',
+  };
+
+  document.getElementById('loginForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim().toLowerCase();
+    const dest = ROUTES[email];
+
+    if (dest) {
+      document.getElementById('submitBtn').textContent = 'Entrando...';
+      setTimeout(() => { location.href = dest; }, 500);
+      return;
+    }
+
+    attempts++;
+    if (attempts >= 5) {
+      document.getElementById('lockAlert').classList.add('show');
+      document.getElementById('submitBtn').disabled = true;
+      document.getElementById('submitBtn').style.opacity = '0.5';
+    } else {
+      alert(
+        'Credencial não reconhecida na prototipagem.\n\nUse um dos e-mails de exemplo para ver o redirecionamento por perfil (RBAC):\n\n' +
+        Object.keys(ROUTES).join('\n') +
+        `\n\nTentativa ${attempts} de 5 antes do bloqueio temporário.`
+      );
+    }
+  });
+
+  document.getElementById('forgotLink').addEventListener('click', (e) => {
+    e.preventDefault();
+    alert('Fluxo de recuperação: um link de redefinição válido por 30 minutos é enviado ao e-mail cadastrado.');
+  });
+</script>
+</body>
+</html>

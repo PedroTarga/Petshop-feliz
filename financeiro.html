@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Financeiro · Petshop Feliz</title>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+<div id="shell-header"></div>
+
+<div class="app-shell">
+  <div id="shell-sidebar"></div>
+
+  <main class="main-content" id="conteudo-principal">
+    <div class="page-head">
+      <div>
+        <p class="page-eyebrow">Financeiro</p>
+        <h1 class="page-title">Visão geral</h1>
+        <p class="page-sub">Acompanhamento de faturamento, cobranças e inadimplência · atualizado há 4 minutos</p>
+      </div>
+      <div style="display:flex; gap: var(--sp-3);">
+        <button class="btn btn-secondary" onclick="alert('Exportando relatório em PDF...')">Exportar relatório</button>
+        <button class="btn btn-primary" id="btnNovoBoleto">+ Emitir boleto</button>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+      <div class="card kpi-card">
+        <p class="kpi-label">Faturamento do mês</p>
+        <p class="kpi-value">R$ 87.420,00</p>
+        <p class="kpi-trend kpi-trend--up">▲ 12,4% vs. julho</p>
+      </div>
+      <div class="card kpi-card">
+        <p class="kpi-label">Boletos a vencer (7 dias)</p>
+        <p class="kpi-value">R$ 14.980,00</p>
+        <p class="kpi-trend" style="color:var(--ink-500)">31 boletos em aberto</p>
+      </div>
+      <div class="card kpi-card">
+        <p class="kpi-label">Taxa de inadimplência</p>
+        <p class="kpi-value">4,2%</p>
+        <p class="kpi-trend kpi-trend--down">▼ 0,6 p.p. vs. julho</p>
+      </div>
+      <div class="card kpi-card">
+        <p class="kpi-label">Assinaturas ativas</p>
+        <p class="kpi-value">216</p>
+        <p class="kpi-trend kpi-trend--up">▲ 8 novas este mês</p>
+      </div>
+    </div>
+
+    <!-- Abas -->
+    <div class="tabs" role="tablist" style="margin-bottom: var(--sp-6);">
+      <button class="tab active" data-tab="boletos" role="tab" aria-selected="true">Emissão de boletos</button>
+      <button class="tab" data-tab="contratos" role="tab" aria-selected="false">Contratos recorrentes</button>
+      <button class="tab" data-tab="inadimplentes" role="tab" aria-selected="false">Inadimplentes</button>
+    </div>
+
+    <!-- ===== Painel: Emissão de boletos ===== -->
+    <section class="tab-panel" id="panel-boletos">
+      <div class="card card--tag" style="padding: var(--sp-6); margin-bottom: var(--sp-6);">
+        <h3 style="font-size:17px; margin-bottom: var(--sp-1);">Gerador de cobrança avulsa</h3>
+        <p style="font-size:13px; color:var(--ink-500); margin-bottom: var(--sp-5);">Emita boletos para banho, tosa, consultas ou produtos vendidos no balcão.</p>
+        <div style="display:grid; grid-template-columns: 2fr 1.4fr 1fr 1fr auto; gap: var(--sp-3); align-items:end;">
+          <div class="field">
+            <label style="display:block;font-size:12.5px;font-weight:600;color:var(--ink-700);margin-bottom:6px;">Tutor / Cliente</label>
+            <input type="text" placeholder="Buscar por nome ou CPF" style="width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid var(--ink-100);font-size:13.5px;" />
+          </div>
+          <div class="field">
+            <label style="display:block;font-size:12.5px;font-weight:600;color:var(--ink-700);margin-bottom:6px;">Serviço / produto</label>
+            <select style="width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid var(--ink-100);font-size:13.5px;background:var(--base-0);">
+              <option>Banho e tosa completa</option>
+              <option>Consulta veterinária</option>
+              <option>Ração premium 10kg</option>
+              <option>Vacina antirrábica</option>
+            </select>
+          </div>
+          <div class="field">
+            <label style="display:block;font-size:12.5px;font-weight:600;color:var(--ink-700);margin-bottom:6px;">Valor</label>
+            <input type="text" value="R$ 120,00" style="width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid var(--ink-100);font-size:13.5px;" />
+          </div>
+          <div class="field">
+            <label style="display:block;font-size:12.5px;font-weight:600;color:var(--ink-700);margin-bottom:6px;">Vencimento</label>
+            <input type="date" style="width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid var(--ink-100);font-size:13.5px;" />
+          </div>
+          <button class="btn btn-primary" onclick="alert('Boleto gerado e enviado ao tutor por e-mail/WhatsApp.')">Gerar boleto</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Boleto</th><th>Tutor</th><th>Serviço</th><th>Valor</th><th>Vencimento</th><th>Status</th><th></th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="data-num">#00482</td>
+                <td>Marina Alves</td>
+                <td>Banho e tosa completa</td>
+                <td class="data-num">R$ 120,00</td>
+                <td class="data-num">18/08/2026</td>
+                <td><span class="badge badge--warn"><span class="badge-dot"></span>A vencer</span></td>
+                <td><button class="btn btn-ghost btn-sm">Ver</button></td>
+              </tr>
+              <tr>
+                <td class="data-num">#00481</td>
+                <td>Carlos Eduardo Lima</td>
+                <td>Consulta veterinária</td>
+                <td class="data-num">R$ 180,00</td>
+                <td class="data-num">17/08/2026</td>
+                <td><span class="badge badge--ok"><span class="badge-dot"></span>Pago</span></td>
+                <td><button class="btn btn-ghost btn-sm">Ver</button></td>
+              </tr>
+              <tr>
+                <td class="data-num">#00479</td>
+                <td>Juliana Prado</td>
+                <td>Ração premium 10kg</td>
+                <td class="data-num">R$ 245,00</td>
+                <td class="data-num">10/08/2026</td>
+                <td><span class="badge badge--alert"><span class="badge-dot"></span>Vencido</span></td>
+                <td><button class="btn btn-ghost btn-sm">Ver</button></td>
+              </tr>
+              <tr>
+                <td class="data-num">#00477</td>
+                <td>Roberto Nunes</td>
+                <td>Vacina antirrábica</td>
+                <td class="data-num">R$ 90,00</td>
+                <td class="data-num">22/08/2026</td>
+                <td><span class="badge badge--warn"><span class="badge-dot"></span>A vencer</span></td>
+                <td><button class="btn btn-ghost btn-sm">Ver</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Painel: Contratos recorrentes ===== -->
+    <section class="tab-panel" id="panel-contratos" style="display:none;">
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: var(--sp-5);">
+        <div class="card card--tag" style="padding: var(--sp-5);">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: var(--sp-3);">
+            <div>
+              <p style="font-family:var(--font-display);font-weight:600;font-size:15px;">Clube do Banho Mensal</p>
+              <p style="font-size:12px;color:var(--ink-500);">Plano recorrente · 4 banhos/mês</p>
+            </div>
+            <span class="badge badge--ok"><span class="badge-dot"></span>Ativo</span>
+          </div>
+          <p class="kpi-value" style="font-size:22px;margin-bottom:var(--sp-2);">R$ 149,90<span style="font-size:12px;color:var(--ink-500);font-family:var(--font-body);">/mês</span></p>
+          <p style="font-size:12.5px;color:var(--ink-500);">128 assinantes ativos</p>
+        </div>
+        <div class="card card--tag" style="padding: var(--sp-5);">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: var(--sp-3);">
+            <div>
+              <p style="font-family:var(--font-display);font-weight:600;font-size:15px;">Plano Saúde Pet</p>
+              <p style="font-size:12px;color:var(--ink-500);">Consultas + vacinas inclusas</p>
+            </div>
+            <span class="badge badge--ok"><span class="badge-dot"></span>Ativo</span>
+          </div>
+          <p class="kpi-value" style="font-size:22px;margin-bottom:var(--sp-2);">R$ 89,90<span style="font-size:12px;color:var(--ink-500);font-family:var(--font-body);">/mês</span></p>
+          <p style="font-size:12.5px;color:var(--ink-500);">64 assinantes ativos</p>
+        </div>
+        <div class="card card--tag" style="padding: var(--sp-5);">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: var(--sp-3);">
+            <div>
+              <p style="font-family:var(--font-display);font-weight:600;font-size:15px;">Combo Tosa + Hotel</p>
+              <p style="font-size:12px;color:var(--ink-500);">Pacote sazonal</p>
+            </div>
+            <span class="badge badge--neutral"><span class="badge-dot"></span>Pausado</span>
+          </div>
+          <p class="kpi-value" style="font-size:22px;margin-bottom:var(--sp-2);">R$ 210,00<span style="font-size:12px;color:var(--ink-500);font-family:var(--font-body);">/mês</span></p>
+          <p style="font-size:12.5px;color:var(--ink-500);">24 assinantes ativos</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Painel: Inadimplentes ===== -->
+    <section class="tab-panel" id="panel-inadimplentes" style="display:none;">
+      <div class="card">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Tutor</th><th>Pet</th><th>Valor em atraso</th><th>Dias de atraso</th><th>Última cobrança</th><th>Ações</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="display:flex;align-items:center;gap:8px;"><span class="avatar-sm">JP</span>Juliana Prado</td>
+                <td>Thor (SRD)</td>
+                <td class="data-num" style="color:var(--coral-600);font-weight:600;">R$ 245,00</td>
+                <td class="data-num">6 dias</td>
+                <td>10/08/2026</td>
+                <td style="display:flex;gap:6px;">
+                  <button class="btn btn-secondary btn-sm" onclick="alert('Notificação enviada por WhatsApp e e-mail.')">Notificar</button>
+                  <button class="btn btn-ghost btn-sm" onclick="alert('Abrindo painel de renegociação de parcelas...')">Renegociar</button>
+                </td>
+              </tr>
+              <tr>
+                <td style="display:flex;align-items:center;gap:8px;"><span class="avatar-sm">FS</span>Fernando Souza</td>
+                <td>Mel (Poodle)</td>
+                <td class="data-num" style="color:var(--coral-600);font-weight:600;">R$ 89,90</td>
+                <td class="data-num">14 dias</td>
+                <td>04/08/2026</td>
+                <td style="display:flex;gap:6px;">
+                  <button class="btn btn-secondary btn-sm" onclick="alert('Notificação enviada por WhatsApp e e-mail.')">Notificar</button>
+                  <button class="btn btn-ghost btn-sm" onclick="alert('Abrindo painel de renegociação de parcelas...')">Renegociar</button>
+                </td>
+              </tr>
+              <tr>
+                <td style="display:flex;align-items:center;gap:8px;"><span class="avatar-sm">CB</span>Camila Borges</td>
+                <td>Nina (Gata SRD)</td>
+                <td class="data-num" style="color:var(--coral-600);font-weight:600;">R$ 320,00</td>
+                <td class="data-num">21 dias</td>
+                <td>28/07/2026</td>
+                <td style="display:flex;gap:6px;">
+                  <button class="btn btn-secondary btn-sm" onclick="alert('Notificação enviada por WhatsApp e e-mail.')">Notificar</button>
+                  <button class="btn btn-ghost btn-sm" onclick="alert('Abrindo painel de renegociação de parcelas...')">Renegociar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="assets/components.js"></script>
+<script>
+  PetshopShell.mount({
+    moduleKey: 'financeiro',
+    activeKey: 'boletos',
+    user: { name: 'Renata Cardoso', role: 'Gestora Financeira', initials: 'RC' },
+  });
+
+  // Alternância de abas
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected','true');
+      document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
+      document.getElementById('panel-' + tab.dataset.tab).style.display = 'block';
+    });
+  });
+
+  document.getElementById('btnNovoBoleto').addEventListener('click', () => {
+    document.querySelector('.tab[data-tab="boletos"]').click();
+    window.scrollTo({ top: 300, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RH · Petshop Feliz</title>
+<link rel="stylesheet" href="assets/styles.css" />
+<style>
+  .rh-steps { display:flex; gap: var(--sp-2); margin-bottom: var(--sp-6); }
+  .rh-step { flex:1; padding: var(--sp-3) var(--sp-4); border-radius: var(--radius-sm); background: var(--base-100); }
+  .rh-step.done { background: var(--leaf-100); }
+  .rh-step.active { background: var(--aqua-100); border: 1.5px solid var(--aqua-500); }
+  .rh-step p:first-child { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color: var(--ink-500); margin-bottom:2px; }
+  .rh-step.active p:first-child { color: var(--aqua-700); }
+  .rh-step.done p:first-child { color: var(--leaf-600); }
+  .rh-step p:last-child { font-size: 13px; font-weight: 600; }
+
+  .vacation-cal { display:grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .vacation-cal .cal-head { font-size:11px; font-weight:700; color:var(--ink-300); text-align:center; padding-bottom:6px; }
+  .cal-day { aspect-ratio: 1; border-radius: 8px; display:flex; align-items:center; justify-content:center; font-size:12.5px; font-family: var(--font-mono); background: var(--base-50); color: var(--ink-500); }
+  .cal-day.on-vacation { background: var(--aqua-500); color: #fff; font-weight:600; }
+  .cal-day.expiring { background: var(--honey-100); color: var(--honey-600); font-weight:700; border: 1.5px solid var(--honey-500); }
+  .cal-day.empty { background: transparent; }
+
+  .payroll-row { display:grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: var(--sp-3); align-items:center; padding: var(--sp-3) var(--sp-4); border-bottom: 1px solid var(--base-100); font-size: 13px; }
+  .payroll-row.head { font-size: 11.5px; text-transform:uppercase; color: var(--ink-500); font-weight:700; letter-spacing:.03em; }
+  .payroll-row:last-child { border-bottom:none; }
+</style>
+</head>
+<body>
+
+<div id="shell-header"></div>
+
+<div class="app-shell">
+  <div id="shell-sidebar"></div>
+
+  <main class="main-content" id="conteudo-principal">
+    <div class="page-head">
+      <div>
+        <p class="page-eyebrow">Gestão de RH</p>
+        <h1 class="page-title">Contratação & desligamento</h1>
+        <p class="page-sub">Fluxo digital de admissão, documentação e homologação da equipe</p>
+      </div>
+      <button class="btn btn-primary" onclick="alert('Abrindo formulário de nova admissão...')">+ Nova admissão</button>
+    </div>
+
+    <!-- ===== Fluxo de admissão ===== -->
+    <div class="card" style="padding: var(--sp-6); margin-bottom: var(--sp-8);">
+      <h3 style="font-size:16px; margin-bottom: var(--sp-4);">Admissão em andamento — Yasmin Ferreira (Tosadora)</h3>
+      <div class="rh-steps">
+        <div class="rh-step done"><p>Etapa 1</p><p>Dados cadastrais</p></div>
+        <div class="rh-step done"><p>Etapa 2</p><p>Envio de documentos</p></div>
+        <div class="rh-step active"><p>Etapa 3</p><p>Validação de documentos</p></div>
+        <div class="rh-step"><p>Etapa 4</p><p>Assinatura de contrato</p></div>
+        <div class="rh-step"><p>Etapa 5</p><p>Homologação</p></div>
+      </div>
+      <div style="display:flex; gap: var(--sp-3);">
+        <button class="btn btn-secondary btn-sm" onclick="alert('Documentos abertos para conferência.')">Revisar documentos</button>
+        <button class="btn btn-primary btn-sm" onclick="alert('Etapa avançada para: Assinatura de contrato.')">Aprovar etapa</button>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: var(--sp-5); margin-bottom: var(--sp-8);">
+      <div class="card" style="padding: var(--sp-5);">
+        <h3 style="font-size:15px; margin-bottom: var(--sp-4);">Admissões recentes</h3>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Colaborador</th><th>Função</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Yasmin Ferreira</td><td>Tosadora</td><td><span class="badge badge--warn"><span class="badge-dot"></span>Em processo</span></td></tr>
+              <tr><td>Igor Almeida</td><td>Banhista</td><td><span class="badge badge--ok"><span class="badge-dot"></span>Homologado</span></td></tr>
+              <tr><td>Patrícia Gomes</td><td>Atendente</td><td><span class="badge badge--ok"><span class="badge-dot"></span>Homologado</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card" style="padding: var(--sp-5);">
+        <h3 style="font-size:15px; margin-bottom: var(--sp-4);">Desligamentos em homologação</h3>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Colaborador</th><th>Função</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Eduardo Ramos</td><td>Banhista</td><td><span class="badge badge--alert"><span class="badge-dot"></span>Pendente</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Férias ===== -->
+    <div class="card" style="padding: var(--sp-6); margin-bottom: var(--sp-8);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: var(--sp-5);">
+        <div>
+          <h3 style="font-size:16px;">Calendário de férias — Agosto 2026</h3>
+          <p style="font-size:12.5px;color:var(--ink-500); margin-top:2px;">Cálculo automático de valores incluído (salário + 1/3 constitucional)</p>
+        </div>
+        <div style="display:flex;gap:var(--sp-4);font-size:12px;">
+          <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:3px;background:var(--aqua-500);display:inline-block;"></span>Em férias</span>
+          <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:3px;background:var(--honey-500);display:inline-block;"></span>Período vencendo</span>
+        </div>
+      </div>
+      <div class="vacation-cal">
+        <div class="cal-head">D</div><div class="cal-head">S</div><div class="cal-head">T</div><div class="cal-head">Q</div><div class="cal-head">Q</div><div class="cal-head">S</div><div class="cal-head">S</div>
+        <div class="cal-day empty"></div><div class="cal-day empty"></div>
+        <div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day">3</div><div class="cal-day">4</div><div class="cal-day">5</div>
+        <div class="cal-day">6</div><div class="cal-day">7</div><div class="cal-day">8</div><div class="cal-day">9</div><div class="cal-day">10</div><div class="cal-day">11</div><div class="cal-day">12</div>
+        <div class="cal-day">13</div><div class="cal-day">14</div><div class="cal-day">15</div>
+        <div class="cal-day on-vacation">16</div><div class="cal-day on-vacation">17</div><div class="cal-day on-vacation">18</div><div class="cal-day on-vacation">19</div>
+        <div class="cal-day">20</div><div class="cal-day">21</div><div class="cal-day">22</div>
+        <div class="cal-day expiring">23</div><div class="cal-day expiring">24</div>
+        <div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div><div class="cal-day">29</div><div class="cal-day">30</div><div class="cal-day">31</div>
+      </div>
+      <div style="margin-top: var(--sp-4); display:flex; gap: var(--sp-3);">
+        <span class="badge badge--warn"><span class="badge-dot"></span>2 colaboradores com período aquisitivo vencendo em 8 dias</span>
+      </div>
+    </div>
+
+    <!-- ===== Folha de pagamento ===== -->
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; padding: var(--sp-5) var(--sp-5) var(--sp-4);">
+        <div>
+          <h3 style="font-size:16px;">Folha de pagamento — Agosto 2026</h3>
+          <p style="font-size:12.5px;color:var(--ink-500); margin-top:2px;">Comissões calculadas automaticamente por procedimento realizado</p>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="alert('Folha de pagamento processada e enviada para aprovação financeira.')">Processar folha</button>
+      </div>
+      <div class="payroll-row head">
+        <span>Colaborador</span><span>Função</span><span>Salário base</span><span>Comissões</span><span>Total</span>
+      </div>
+      <div class="payroll-row">
+        <span style="display:flex;align-items:center;gap:8px;"><span class="avatar-sm">IA</span>Igor Almeida</span>
+        <span>Banhista</span>
+        <span class="data-num">R$ 1.900,00</span>
+        <span class="data-num" style="color:var(--leaf-600);">+ R$ 420,00</span>
+        <span class="data-num" style="font-weight:600;">R$ 2.320,00</span>
+      </div>
+      <div class="payroll-row">
+        <span style="display:flex;align-items:center;gap:8px;"><span class="avatar-sm">YF</span>Yasmin Ferreira</span>
+        <span>Tosadora</span>
+        <span class="data-num">R$ 2.100,00</span>
+        <span class="data-num" style="color:var(--leaf-600);">+ R$ 610,00</span>
+        <span class="data-num" style="font-weight:600;">R$ 2.710,00</span>
+      </div>
+      <div class="payroll-row">
+        <span style="display:flex;align-items:center;gap:8px;"><span class="avatar-sm">PG</span>Patrícia Gomes</span>
+        <span>Atendente</span>
+        <span class="data-num">R$ 1.750,00</span>
+        <span class="data-num" style="color:var(--ink-300);">—</span>
+        <span class="data-num" style="font-weight:600;">R$ 1.750,00</span>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="assets/components.js"></script>
+<script>
+  PetshopShell.mount({
+    moduleKey: 'rh',
+    activeKey: 'admissao',
+    user: { name: 'Sônia Rezende', role: 'Gestora de RH', initials: 'SR' },
+  });
+</script>
+</body>
+</html>

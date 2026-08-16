@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Comercial & CRM · Petshop Feliz</title>
+<link rel="stylesheet" href="assets/styles.css" />
+<style>
+  .crm-layout { display: grid; grid-template-columns: 1fr 340px; gap: var(--sp-6); align-items: start; }
+  .kanban-board { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-4); }
+  .kanban-col { background: var(--base-100); border-radius: var(--radius-md); padding: var(--sp-3); min-height: 420px; }
+  .kanban-col-head { display:flex; justify-content:space-between; align-items:center; padding: var(--sp-2) var(--sp-2) var(--sp-3); }
+  .kanban-col-head p { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; color: var(--ink-500); }
+  .kanban-count { font-family: var(--font-mono); font-size: 11px; background: var(--base-0); padding: 2px 8px; border-radius: 999px; color: var(--ink-700); }
+  .kanban-card { background: var(--base-0); border-radius: var(--radius-sm); padding: var(--sp-3); margin-bottom: var(--sp-3); box-shadow: var(--shadow-card); cursor: grab; border: 1px solid transparent; }
+  .kanban-card:hover { border-color: var(--aqua-300); }
+  .kanban-card p.name { font-size: 13.5px; font-weight: 600; margin-bottom: 4px; }
+  .kanban-card p.desc { font-size: 12px; color: var(--ink-500); margin-bottom: var(--sp-2); }
+  .kanban-card .value { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--aqua-700); }
+
+  .sac-item { display:flex; gap: var(--sp-3); padding: var(--sp-3); border-radius: var(--radius-sm); }
+  .sac-item:hover { background: var(--base-50); }
+  .sac-item .avatar-sm { flex-shrink:0; }
+
+  .pet-history-row { display:flex; justify-content:space-between; padding: 9px 0; border-bottom: 1px solid var(--base-100); font-size: 13px; }
+  .pet-history-row:last-child { border-bottom: none; }
+  .pet-history-row span:first-child { color: var(--ink-500); }
+  .pet-history-row span:last-child { font-weight: 600; color: var(--ink-900); }
+
+  @media (max-width: 1100px) {
+    .crm-layout { grid-template-columns: 1fr; }
+    .kanban-board { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div id="shell-header"></div>
+
+<div class="app-shell">
+  <div id="shell-sidebar"></div>
+
+  <main class="main-content" id="conteudo-principal">
+    <div class="page-head">
+      <div>
+        <p class="page-eyebrow">Comercial & CRM</p>
+        <h1 class="page-title">Funil de vendas</h1>
+        <p class="page-sub">Propostas de pacotes de serviços e produtos em andamento</p>
+      </div>
+      <button class="btn btn-primary" onclick="alert('Abrindo formulário de nova proposta...')">+ Nova proposta</button>
+    </div>
+
+    <div class="crm-layout">
+      <!-- ===== Kanban ===== -->
+      <section aria-label="Quadro Kanban do funil de vendas">
+        <div class="kanban-board">
+          <div class="kanban-col">
+            <div class="kanban-col-head"><p>Contato inicial</p><span class="kanban-count">4</span></div>
+            <div class="kanban-card"><p class="name">Ana Beatriz Costa</p><p class="desc">Interesse em plano mensal</p><p class="value">R$ 149,90/mês</p></div>
+            <div class="kanban-card"><p class="name">Pedro Henrique</p><p class="desc">Pacote de banho e tosa</p><p class="value">R$ 320,00</p></div>
+            <div class="kanban-card"><p class="name">Larissa Farias</p><p class="desc">Combo hotel + creche</p><p class="value">R$ 480,00</p></div>
+            <div class="kanban-card"><p class="name">Diego Martins</p><p class="desc">Ração + suplementos</p><p class="value">R$ 210,00</p></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kanban-col-head"><p>Proposta enviada</p><span class="kanban-count">3</span></div>
+            <div class="kanban-card"><p class="name">Marina Alves</p><p class="desc">Clube do Banho Mensal</p><p class="value">R$ 149,90/mês</p></div>
+            <div class="kanban-card"><p class="name">Rafael Oliveira</p><p class="desc">Plano Saúde Pet</p><p class="value">R$ 89,90/mês</p></div>
+            <div class="kanban-card"><p class="name">Camila Borges</p><p class="desc">Vacinação completa</p><p class="value">R$ 380,00</p></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kanban-col-head"><p>Negociação</p><span class="kanban-count">2</span></div>
+            <div class="kanban-card"><p class="name">Carlos Eduardo Lima</p><p class="desc">Desconto para 2 pets</p><p class="value">R$ 260,00</p></div>
+            <div class="kanban-card"><p class="name">Fernanda Ribeiro</p><p class="desc">Combo Tosa + Hotel</p><p class="value">R$ 210,00/mês</p></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kanban-col-head"><p>Fechado</p><span class="kanban-count">5</span></div>
+            <div class="kanban-card" style="border-left:3px solid var(--leaf-500);"><p class="name">Juliana Prado</p><p class="desc">Plano Saúde Pet</p><p class="value">R$ 89,90/mês</p></div>
+            <div class="kanban-card" style="border-left:3px solid var(--leaf-500);"><p class="name">Roberto Nunes</p><p class="desc">Ração premium 10kg</p><p class="value">R$ 245,00</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Painel lateral: SAC + histórico do pet ===== -->
+      <aside style="display:flex; flex-direction:column; gap: var(--sp-5);">
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; padding: var(--sp-4) var(--sp-4) var(--sp-2);">
+            <h3 style="font-size:14.5px;">Central SAC</h3>
+            <span class="badge badge--alert"><span class="badge-dot"></span>5 novos</span>
+          </div>
+          <div style="padding: 0 var(--sp-2) var(--sp-3);">
+            <div class="sac-item">
+              <span class="avatar-sm">MA</span>
+              <div>
+                <p style="font-size:13px;font-weight:600;">Marina Alves</p>
+                <p style="font-size:12px;color:var(--ink-500);">Atraso no horário do banho de hoje</p>
+              </div>
+            </div>
+            <div class="sac-item">
+              <span class="avatar-sm">RO</span>
+              <div>
+                <p style="font-size:13px;font-weight:600;">Rafael Oliveira</p>
+                <p style="font-size:12px;color:var(--ink-500);">Dúvida sobre cobrança duplicada</p>
+              </div>
+            </div>
+            <div class="sac-item">
+              <span class="avatar-sm">CB</span>
+              <div>
+                <p style="font-size:13px;font-weight:600;">Camila Borges</p>
+                <p style="font-size:12px;color:var(--ink-500);">Elogio ao atendimento da tosadora</p>
+              </div>
+            </div>
+          </div>
+          <div style="padding: 0 var(--sp-4) var(--sp-4);">
+            <button class="btn btn-secondary btn-sm" style="width:100%;" onclick="alert('Abrindo central de chamados completa...')">Ver todos os chamados</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="padding: var(--sp-4) var(--sp-4) var(--sp-3); border-bottom:1px solid var(--base-100);">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="avatar-sm" style="width:38px;height:38px;font-size:13px;">TH</span>
+              <div>
+                <p style="font-size:14px;font-weight:600;">Thor</p>
+                <p style="font-size:12px;color:var(--ink-500);">SRD · Tutor: Juliana Prado</p>
+              </div>
+            </div>
+          </div>
+          <div style="padding: var(--sp-2) var(--sp-4) var(--sp-4);">
+            <div class="pet-history-row"><span>Último banho</span><span>12/08/2026</span></div>
+            <div class="pet-history-row"><span>Última vacina</span><span>Múltipla · 02/06/2026</span></div>
+            <div class="pet-history-row"><span>Ração preferida</span><span>Frango & arroz</span></div>
+            <div class="pet-history-row"><span>Próxima vacina</span><span style="color:var(--honey-600);">em 14 dias</span></div>
+          </div>
+          <div style="padding: 0 var(--sp-4) var(--sp-4);">
+            <button class="btn btn-primary btn-sm" style="width:100%;" onclick="alert('Lembrete de banho + oferta de 10% enviado ao tutor.')">Enviar lembrete e oferta</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<script src="assets/components.js"></script>
+<script>
+  PetshopShell.mount({
+    moduleKey: 'crm',
+    activeKey: 'funil',
+    user: { name: 'Bruno Tavares', role: 'Vendedor', initials: 'BT' },
+  });
+</script>
+</body>
+</html>
